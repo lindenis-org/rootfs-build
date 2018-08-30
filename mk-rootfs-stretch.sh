@@ -91,10 +91,6 @@ if insserv -s | grep mpp > /dev/null ; then
 insserv /etc/init.d/mpp
 fi
 
-if insserv -s | grep bt > /dev/null ; then
-insserv /etc/init.d/bt
-fi
-
 apt-get install -y bash-completion
 
 apt-get install -y lxde-core gpicview leafpad lxterminal
