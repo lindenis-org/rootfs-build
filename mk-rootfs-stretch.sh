@@ -110,7 +110,7 @@ apt-get install -y openssh-server
 
 apt-get install -y firefox-esr
 
-apt-get install -y bluez pulseaudio-module-bluetooth bluetooth bluez-firmware
+apt-get install -y bluez
 
 apt-get install -y python python-pip idle-python2.7 python-pyaudio python-opencv python-usb python-pyqt5 python-bluez 
 
