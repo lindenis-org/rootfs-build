@@ -10,7 +10,7 @@ fi
 [ -z $_TARGET_BOARD ] && echo 'source build/envsetup.sh' && exit -1
 
 if [ ! $targetdir ] ; then
-	targetdir=$OUT_DIR/$_TARGET_PLATFORM/$_TARGET_BOARD/debian/target
+	targetdir=$OUT_DIR/$_TARGET_PLATFORM/$_TARGET_BOARD/$_TARGET_OS/target
 fi
 
 rootfs_image=${OUT_DIR}/$_TARGET_PLATFORM/$_TARGET_BOARD/rootfs.ext4

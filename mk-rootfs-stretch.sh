@@ -17,7 +17,7 @@ dev_out_dir=$OUT_DIR/$_TARGET_PLATFORM/$_TARGET_BOARD
 
 # target rootfs
 if [ ! $targetdir ] ; then
-	targetdir=$dev_out_dir/debian/target
+	targetdir=$dev_out_dir/$_TARGET_OS/target
 fi
 
 if [ ! -d $targetdir ] ; then
@@ -35,7 +35,14 @@ trap finish ERR
 
 if [ ! -f $targetdir/tmp/.stamp_extracted ] ; then
 	echo 'Extrace basic rootfs'
-	sudo tar -xzpf stretch-alip.tar.gz -C $targetdir
+	if [ "x$_TARGET_OS" = "xdebian" ] ; then
+		sudo tar -xzpf stretch-alip.tar.gz -C $targetdir
+	elif [ "x$_TARGET_OS" = "xdebian-hf" ] ; then
+		sudo tar -xzpf stretch-hf-alip.tar.gz -C $targetdir
+	else
+		echo "Invalid OS type"
+		exit -1
+	fi
 	touch $targetdir/tmp/.stamp_extracted
 else
 	echo 'Skip extract basic rootfs'
@@ -86,9 +93,13 @@ dpkg-reconfigure -f noninteractive locales
 update-locale LANG=en_US.UTF-8
 fi
 
-apt-get install -y insserv zlib1g libgoogle-glog0v5 libasound2
+apt-get install -y insserv zlib1g libgoogle-glog0v5 libgoogle-glog-dev libasound2-dev libasound2
 if insserv -s | grep mpp > /dev/null ; then
 insserv /etc/init.d/mpp
+fi
+
+if insserv -s | grep bt > /dev/null ; then
+insserv /etc/init.d/bt
 fi
 
 apt-get install -y bash-completion
@@ -103,8 +114,6 @@ gpasswd -a ai netdev
 fi
 
 apt-get install -y openssh-server
-
-apt-get install -y firefox-esr
 
 apt-get install -y bluez
 

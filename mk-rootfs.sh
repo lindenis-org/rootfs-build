@@ -4,4 +4,4 @@ if [ ! $RELEASE ] ; then
 	RELEASE='stretch'
 fi
 
-./mk-rootfs-$RELEASE.sh
+./mk-rootfs-$RELEASE.sh $@
